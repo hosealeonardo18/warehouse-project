@@ -2,15 +2,24 @@
 
 use CodeIgniter\Router\RouteCollection;
 
+
 /**
  * @var RouteCollection $routes
  */
 
-//  dashboard
-$routes->get('/', 'HomeController::index');
 
-// auth
+$routes->group('', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'HomeController::index');
+    $routes->get('/logout', 'AuthController::logout');
+
+    // users
+    $routes->get('/users', 'UserController::index');
+    $routes->get('/datatables/users', 'UserController::datatables');
+});
+
 $routes->get('/login', 'AuthController::index');
 $routes->get('/register', 'AuthController::indexRegister');
-$routes->get('/logout', 'AuthController::logout');
 $routes->get('/forgot', 'AuthController::forgot');
+
+$routes->post('/register', 'AuthController::register');
+$routes->post('/login', 'AuthController::login');

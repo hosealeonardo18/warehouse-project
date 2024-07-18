@@ -47,19 +47,29 @@
         <h4 class="mb-2">Adventure starts here 🚀</h4>
         <p class="mb-4">Make your app management easy and fun!</p>
 
-        <form id="formAuthentication" class="mb-3" action="index.html">
+        <?= view('flashdata/index') ?>
+
+        <form id="formAuthentication" class="mb-3" method="post" action="<?= base_url('/register') ?>">
             <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus />
+                <label for="name" class="form-label">Fullname</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your fullname" autofocus />
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" />
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" />
             </div>
             <div class="mb-3 form-password-toggle">
                 <label class="form-label" for="password">Password</label>
                 <div class="input-group input-group-merge">
                     <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+            </div>
+
+            <div class="mb-3 form-password-toggle">
+                <label class="form-label" for="confirm_password">Confirm Password</label>
+                <div class="input-group input-group-merge">
+                    <input type="password" id="confirm_password" class="form-control" name="confirm_password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                 </div>
             </div>
