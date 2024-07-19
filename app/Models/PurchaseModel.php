@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class WarehouseModel extends Model
+class PurchaseModel extends Model
 {
-    protected $table            = 'warehouses';
+    protected $table            = 'purchases';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["uid", "name", "pj_user_uid"];
+    protected $allowedFields    = [];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -21,7 +21,7 @@ class WarehouseModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -43,34 +43,4 @@ class WarehouseModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function getAllWarehouseWithUser($start, $length, $searchValue = '')
-    {
-        $builder = $this->db->table('warehouses');
-        $builder->select('warehouses.*, users.name as pj_name');
-        $builder->join('users', 'users.uid = warehouses.pj_user_uid', 'left');
-
-        if (!empty($searchValue)) {
-            $builder->like('warehouses.name', $searchValue);
-        }
-
-        $totalData = $builder->countAllResults(false); // false agar tidak di-reset oleh countAllResults
-
-        $builder->limit($length, $start);
-        $query = $builder->get();
-
-        $users = $query->getResultArray();
-
-        return [
-            'totalData' => $totalData,
-            'warehouse' => $users,
-        ];
-    }
-
-    public function getAll()
-    {
-        $builder = $this->db->table($this->table);
-        $query = $builder->get();
-        return $query->getResult();
-    }
 }

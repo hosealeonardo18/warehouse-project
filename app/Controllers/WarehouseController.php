@@ -59,8 +59,8 @@ class WarehouseController extends BaseController
                 'name' => [
                     'rules' => 'required|string',
                     'errors' => [
-                        'required' => 'Role name is required.',
-                        'string' => 'Role name must be a valid string.'
+                        'required' => 'Warehouse name is required.',
+                        'string' => 'Warehouse name must be a valid string.'
                     ]
                 ],
             ];

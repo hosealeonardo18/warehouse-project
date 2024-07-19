@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class WarehouseModel extends Model
+class ProductModel extends Model
 {
-    protected $table            = 'warehouses';
+    protected $table            = 'products';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["uid", "name", "pj_user_uid"];
+    protected $allowedFields    = ["uid", "name", "qty", "warehouse_uid"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,14 +44,14 @@ class WarehouseModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getAllWarehouseWithUser($start, $length, $searchValue = '')
+    public function getAllProductWithWarehouse($start, $length, $searchValue = '')
     {
-        $builder = $this->db->table('warehouses');
-        $builder->select('warehouses.*, users.name as pj_name');
-        $builder->join('users', 'users.uid = warehouses.pj_user_uid', 'left');
+        $builder = $this->db->table('products');
+        $builder->select('products.*, warehouses.name as warehouse_name');
+        $builder->join('warehouses', 'warehouses.uid = products.warehouse_uid', 'left');
 
         if (!empty($searchValue)) {
-            $builder->like('warehouses.name', $searchValue);
+            $builder->like('products.name', $searchValue);
         }
 
         $totalData = $builder->countAllResults(false); // false agar tidak di-reset oleh countAllResults
@@ -59,11 +59,11 @@ class WarehouseModel extends Model
         $builder->limit($length, $start);
         $query = $builder->get();
 
-        $users = $query->getResultArray();
+        $product = $query->getResultArray();
 
         return [
             'totalData' => $totalData,
-            'warehouse' => $users,
+            'product' => $product,
         ];
     }
 

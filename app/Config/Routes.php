@@ -36,12 +36,26 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
     // products
     $routes->get('/products', 'ProductController::index');
+    $routes->get('/datatables/products', 'ProductController::datatables');
+    $routes->post('/products', 'ProductController::store');
+    $routes->delete('/products/(:any)/delete', 'ProductController::destroy/$1');
+    $routes->put('/products/(:any)/update', 'ProductController::update/$1');
 
 
+    // Stock Request
+    $routes->get('/stock-request', 'StockController::index');
+    $routes->get('/datatables/stock-request', 'StockController::datatables');
+    $routes->post('/stock-request', 'StockController::store');
+    $routes->delete('/stock-request/(:any)/delete', 'StockController::destroy/$1');
+
+    // Purchase Request
+    $routes->get('/purchase-request', 'PurchaseController::index');
 
     // helper
     $routes->get('/helper/get/roles', 'HelperController::getAllRoles');
     $routes->get('/helper/get/users', 'HelperController::getAllUser');
+    $routes->get('/helper/get/warehouses', 'HelperController::getAllWarehouse');
+    $routes->get('/helper/get/products', 'HelperController::getAllProducts');
 });
 
 $routes->get('/login', 'AuthController::index');

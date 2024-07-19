@@ -54,41 +54,22 @@
             </a>
         </li>
 
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Warehouse</span>
+        </li>
 
-        <!-- Layouts -->
         <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Layouts</div>
+            <a href="/stock-request" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-gift'></i>
+                <div data-i18n="Email">Stock Request</div>
             </a>
+        </li>
 
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="layouts-without-menu.html" class="menu-link">
-                        <div data-i18n="Without menu">Without menu</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
-                        <div data-i18n="Without navbar">Without navbar</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-container.html" class="menu-link">
-                        <div data-i18n="Container">Container</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-fluid.html" class="menu-link">
-                        <div data-i18n="Fluid">Fluid</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-blank.html" class="menu-link">
-                        <div data-i18n="Blank">Blank</div>
-                    </a>
-                </li>
-            </ul>
+        <li class="menu-item">
+            <a href="/purchase-request" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-cart-add'></i>
+                <div data-i18n="Email">Purchase Request</div>
+            </a>
         </li>
 
         <?php if (session()->get('user.role') === "Superuser" || session()->get('user.role') === "Admin") : ?>
@@ -110,19 +91,21 @@
                 </a>
             </li>
 
-            <li class="menu-item">
-                <a href="/users" class="menu-link">
-                    <i class='menu-icon tf-icons bx bxs-user-account'></i>
-                    <div data-i18n="Email">Users</div>
-                </a>
-            </li>
+            <?php if (session()->get('user.role') === "Superuser") : ?>
+                <li class="menu-item">
+                    <a href="/users" class="menu-link">
+                        <i class='menu-icon tf-icons bx bxs-user-account'></i>
+                        <div data-i18n="Email">Users</div>
+                    </a>
+                </li>
 
-            <li class="menu-item">
-                <a href="/roles" class="menu-link">
-                    <i class='menu-icon tf-icons bx bxs-user-detail'></i>
-                    <div data-i18n="Email">Roles</div>
-                </a>
-            </li>
+                <li class="menu-item">
+                    <a href="/roles" class="menu-link">
+                        <i class='menu-icon tf-icons bx bxs-user-detail'></i>
+                        <div data-i18n="Email">Roles</div>
+                    </a>
+                </li>
+            <?php endif ?>
         <?php endif ?>
 
         <?php if (session()->get('user.role') === "Superuser") : ?>
