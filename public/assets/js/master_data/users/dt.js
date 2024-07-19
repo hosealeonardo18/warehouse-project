@@ -25,7 +25,20 @@ $(document).ready(function () {
         data: "role_name",
         sortable: true,
         render: function (data, type, row) {
-          return data;
+          let text = "";
+          let badge = "";
+
+          if (data == "Superuser") {
+            text = data;
+            badge = "bg-primary";
+          } else if (data == "Admin") {
+            text = data;
+            badge = "bg-success";
+          } else {
+            text = data;
+            badge = "bg-warning";
+          }
+          return `<span class="badge ${badge}">${text}</span>`;
         },
       },
       {

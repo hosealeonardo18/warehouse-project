@@ -93,7 +93,7 @@ class AuthController extends BaseController
             session()->setFlashdata('alertSuccess', 'User successfully created.');
             return redirect()->to('/login');
         } catch (\Exception $e) {
-            session()->setFlashdata('alertError', ['exception' => $$e->getMessage()]);
+            session()->setFlashdata('alertError', ['exception' => $e->getMessage()]);
             return redirect()->back()->withInput();
         }
     }
@@ -158,7 +158,7 @@ class AuthController extends BaseController
                 return redirect()->back()->withInput();
             }
         } catch (\Exception $e) {
-            session()->setFlashdata('alertError', ['exception' => $$e->getMessage()]);
+            session()->setFlashdata('alertError', ['exception' => $e->getMessage()]);
             return redirect()->back()->withInput();
         }
     }

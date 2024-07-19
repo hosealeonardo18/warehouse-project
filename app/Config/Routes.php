@@ -15,6 +15,12 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // users
     $routes->get('/users', 'UserController::index');
     $routes->get('/datatables/users', 'UserController::datatables');
+    $routes->post('/users', 'UserController::store');
+    $routes->delete('/users/(:any)/delete', 'UserController::destroy/$1');
+
+
+    // helper
+    $routes->get('/helper/get/roles', 'HelperController::getAllRoles');
 });
 
 $routes->get('/login', 'AuthController::index');

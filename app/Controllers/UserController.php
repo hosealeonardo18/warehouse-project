@@ -5,8 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\UsersModel;
 use CodeIgniter\API\ResponseTrait;
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\ResponseInterface;
+use Exception;
 
 class UserController extends BaseController
 {
@@ -15,7 +14,7 @@ class UserController extends BaseController
     public function index()
     {
         return view('master_data/users/index', [
-            "title" => "Login | Warehouse"
+            "title" => "Users | Warehouse"
         ]);
     }
 
@@ -48,6 +47,87 @@ class UserController extends BaseController
         } catch (\Throwable $th) {
             // Handle exception
             return $this->failServerError($th->getMessage());
+        }
+    }
+
+    public function store()
+    {
+        require_once APPPATH . 'Helpers/common.php';
+        try {
+            $rules = [
+                'name' => [
+                    'rules' => 'required|string',
+                    'errors' => [
+                        'required' => 'Fullname is required.',
+                        'string' => 'Full name must be a valid string.'
+                    ]
+                ],
+                'email' => [
+                    'rules' => 'required|valid_email',
+                    'errors' => [
+                        'required' => 'Email is required.',
+                        'valid_email' => 'You must provide a valid email address.'
+                    ]
+                ],
+                'password' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Password is required.'
+                    ]
+                ],
+            ];
+
+            // Validate the input data
+            if (!$this->validate($rules)) {
+                // If validation fails, get the validation messages
+                $errors = $this->validation->getErrors();
+                session()->setFlashdata('alertError', $errors);
+
+                return redirect()->back()->withInput();
+            }
+
+            $request = $this->request->getPost();
+            $email = $request['email'];
+
+            $userModel = new UsersModel();
+            $checkUser = $userModel->where('email', $email)->first();
+
+            if ($checkUser) throw new Exception("User has been registered. please using another email.", 422);
+
+            $payload = [
+                "uid" => getUid(),
+                "name" => $request['name'],
+                "email" => $request['email'],
+                "password" => password_hash($request['password'], PASSWORD_BCRYPT),
+                "role_id" => $request['role']
+            ];
+
+            $userModel->insert($payload);
+
+            session()->setFlashdata('alertSuccess', 'Successfully created User.');
+            return redirect()->back()->withInput();
+        } catch (\Exception $e) {
+            session()->setFlashdata('alertError', ['exception' => $e->getMessage()]);
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function destroy($uid)
+    {
+        try {
+            $userModel = new UsersModel();
+
+            // Hapus pengguna langsung dengan menggunakan UID
+            if ($userModel->where('uid', $uid)->delete()) {
+                session()->setFlashdata('alertSuccess', 'Successfully Delete User.');
+            } else {
+                session()->setFlashdata('alertError', 'Failed to delete user.');
+            }
+
+            return redirect()->back()->withInput();
+        } catch (Exception $e) {
+            session()->setFlashdata('alertError', ['exception' => $e->getMessage()]);
+            return redirect()->back()->withInput();
         }
     }
 }
