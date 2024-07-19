@@ -9,7 +9,7 @@ class HomeController extends BaseController
     public function index(): string
     {
         return view('dashboard/index', [
-            "title" => "Dashboard | Warehouse"
+            "title" => "Dashboard | Warehouse App"
         ]);
     }
 }

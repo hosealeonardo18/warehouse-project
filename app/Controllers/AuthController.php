@@ -16,21 +16,21 @@ class AuthController extends BaseController
     public function index()
     {
         return view('authentication/login/index', [
-            "title" => "Login | Warehouse"
+            "title" => "Login | Warehouse App"
         ]);
     }
 
     public function indexRegister()
     {
         return view('authentication/register/index', [
-            "title" => "Register | Warehouse"
+            "title" => "Register | Warehouse App"
         ]);
     }
 
     public function forgot()
     {
         return view('authentication/forgot/index', [
-            "title" => "Forgot Password | Warehouse"
+            "title" => "Forgot Password | Warehouse App"
         ]);
     }
 

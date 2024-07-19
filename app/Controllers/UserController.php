@@ -14,7 +14,7 @@ class UserController extends BaseController
     public function index()
     {
         return view('master_data/users/index', [
-            "title" => "Users | Warehouse"
+            "title" => "Users | Warehouse App"
         ]);
     }
 
@@ -107,6 +107,49 @@ class UserController extends BaseController
             session()->setFlashdata('alertSuccess', 'Successfully created User.');
             return redirect()->back()->withInput();
         } catch (\Exception $e) {
+            session()->setFlashdata('alertError', ['exception' => $e->getMessage()]);
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function update($uid)
+    {
+        try {
+            // Mengambil data dari permintaan
+            $request = $this->request->getPost();
+            $currents = ["name", "email", "role_id"];
+
+            // Mengambil model pengguna
+            $userModel = new UsersModel();
+            $users = $userModel->where('uid', $uid)->first();
+
+            // Cek jika pengguna tidak ditemukan
+            if (!$users) {
+                throw new Exception('User not found', 404);
+            }
+
+            $payload = [];
+            foreach ($currents as $current) {
+                // Menyaring dan memeriksa perubahan data
+                if (isset($request[$current]) && $request[$current] !== $users[$current]) {
+                    if ($current === "role_id") {
+                        $payload[$current] = (int)$request[$current]; // Konversi ke integer
+                    } else {
+                        $payload[$current] = $request[$current];
+                    }
+                }
+            }
+
+            // Jika payload tidak kosong, lakukan pembaruan
+            if (!empty($payload)) {
+                $userModel->where('uid', $uid)->set($payload)->update();
+                session()->setFlashdata('alertSuccess', 'Successfully updated User.');
+            } else {
+                session()->setFlashdata('alertInfo', 'No changes were made.');
+            }
+
+            return redirect()->back()->withInput();
+        } catch (Exception $e) {
             session()->setFlashdata('alertError', ['exception' => $e->getMessage()]);
             return redirect()->back()->withInput();
         }

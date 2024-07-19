@@ -13,7 +13,7 @@ $(document).ready(function () {
     ],
     columns: [
       {
-        title: "Nama",
+        title: "Name",
         data: "name",
         sortable: true,
         render: function (data, type, row) {
@@ -21,7 +21,7 @@ $(document).ready(function () {
         },
       },
       {
-        title: "Posisi",
+        title: "Role",
         data: "role_name",
         sortable: true,
         render: function (data, type, row) {
@@ -50,15 +50,17 @@ $(document).ready(function () {
         },
       },
       {
-        title: "Aksi",
+        title: "Action",
         data: "uid",
         sortable: false,
         class: "text-nowrap",
         render: function (data, type, row) {
           let buttons = "";
 
+          const obj = encodeURIComponent(JSON.stringify(row));
+
           buttons += `
-              <button type="button" class="btn btn-icon btn-transparent" onclick="editUser('${data}', '${row.name}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+              <button type="button" class="btn btn-icon btn-transparent" onclick="editUser('${data}', '${obj}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                 <i class="bx menu-icon tf-icons bx bxs-edit-alt bx-xs"></i>
               </button>
             `;

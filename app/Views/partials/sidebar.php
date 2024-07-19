@@ -97,6 +97,20 @@
             </li>
             <!-- Apps -->
             <li class="menu-item">
+                <a href="/warehouses" class="menu-link">
+                    <i class='menu-icon tf-icons bx bxs-store-alt'></i>
+                    <div data-i18n="Email">Warehouses</div>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="/products" class="menu-link">
+                    <i class='menu-icon tf-icons bx bxs-package'></i>
+                    <div data-i18n="Email">Products</div>
+                </a>
+            </li>
+
+            <li class="menu-item">
                 <a href="/users" class="menu-link">
                     <i class='menu-icon tf-icons bx bxs-user-account'></i>
                     <div data-i18n="Email">Users</div>
@@ -104,7 +118,7 @@
             </li>
 
             <li class="menu-item">
-                <a href="/roles" target="_blank" class="menu-link">
+                <a href="/roles" class="menu-link">
                     <i class='menu-icon tf-icons bx bxs-user-detail'></i>
                     <div data-i18n="Email">Roles</div>
                 </a>

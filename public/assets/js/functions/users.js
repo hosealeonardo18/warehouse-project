@@ -1,16 +1,16 @@
-const getRoles = (attribute, selectValue = null) => {
+const getUsers = (attribute, selectValue = null) => {
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: "/helper/get/roles",
+      url: "/helper/get/users",
       success: function (response) {
         if (response.error === 0) {
           let data = response.data;
           attribute.html("");
-          attribute.append('<option value=""--Select Roles</option>');
+          attribute.append('<option value=""--Select Users</option>');
 
           data.forEach((elm) => {
-            let newElm = `<option value="${elm.id}" ${
-              elm.id == selectValue ? "selected" : ""
+            let newElm = `<option value="${elm.uid}" ${
+              elm.uid == selectValue ? "selected" : ""
             }>${elm.name}</option>`;
 
             attribute.append(newElm);

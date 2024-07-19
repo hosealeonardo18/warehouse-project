@@ -53,4 +53,11 @@ class UsersModel extends Model
             'users' => $users,
         ];
     }
+
+    public function getAll()
+    {
+        $builder = $this->db->table($this->table);
+        $query = $builder->get();
+        return $query->getResult();
+    }
 }

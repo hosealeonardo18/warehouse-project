@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class RoleModel extends Model
+class WarehouseModel extends Model
 {
-    protected $table            = 'roles';
+    protected $table            = 'warehouses';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name"];
+    protected $allowedFields    = ["uid", "name", "pj_user_uid"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,34 +44,26 @@ class RoleModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getAll()
+    public function getAllWarehouseWithUser($start, $length, $searchValue = '')
     {
-        $builder = $this->db->table($this->table);
-        $query = $builder->get();
-        return $query->getResult();
-    }
+        $builder = $this->db->table('warehouses');
+        $builder->select('warehouses.*, users.name as pj_name');
+        $builder->join('users', 'users.uid = warehouses.pj_user_uid', 'left');
 
-    public function getAllRoles($start, $length, $searchValue = '')
-    {
-        $builder = $this->db->table('roles');
-
-        // Filter berdasarkan search value
         if (!empty($searchValue)) {
-            $builder->like('name', $searchValue);
+            $builder->like('warehouses.name', $searchValue);
         }
 
-        // Hitung total data sebelum limit dan offset diterapkan
         $totalData = $builder->countAllResults(false); // false agar tidak di-reset oleh countAllResults
 
-        // Terapkan limit dan offset
         $builder->limit($length, $start);
         $query = $builder->get();
 
-        $roles = $query->getResultArray();
+        $users = $query->getResultArray();
 
         return [
             'totalData' => $totalData,
-            'roles' => $roles,
+            'warehouse' => $users,
         ];
     }
 }

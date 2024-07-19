@@ -40,11 +40,11 @@
                         </g>
                     </svg>
                 </span>
-                <span class="app-brand-text demo text-body fw-bold">Sneat</span>
+                <span class="app-brand-text demo text-body fw-bold text-uppercase">Login</span>
             </a>
         </div>
         <!-- /Logo -->
-        <h4 class="mb-2">Welcome to Sneat! 👋</h4>
+        <h4 class="mb-2">Welcome to Warehouse APP! 👋</h4>
         <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
         <?= view('flashdata/index') ?>
